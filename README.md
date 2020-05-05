@@ -10,6 +10,7 @@ npm install --save-dev serverless-pseudo-parameters</br>
 
 
 <h1>To Deploy</h1>
+git clone git@github.com:dddtri3/dddtri3-serverless-service.git
 serverless deploy --stage dev
 
 <h1>To Remove</h1>
