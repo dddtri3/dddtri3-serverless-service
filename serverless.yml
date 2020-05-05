@@ -23,12 +23,23 @@ provider:
   name: aws
   runtime: nodejs10.x
 
-outputs:
-  custom-output: any-value-here
-
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
+  stage: dev
+  region: us-east-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:Scan*
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:service}-students-${opt:stage}
+
+
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -46,6 +57,9 @@ outputs:
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
 
+
+  environment:
+    DYNAMDB_STUDENT_TABLE: ${self:service}-students-${opt:stage}
 # you can define service wide environment variables here
 #  environment:
 #    variable1: value1
@@ -59,14 +73,27 @@ outputs:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 
+plugins:
+  - serverless-pseudo-parameters
 functions:
-  hello:
-    handler: handler.hello
+  student_create:
+    handler: student.create
+    events:
+     - http:
+          path: /v1/student
+          method: post
+  student_list:
+    handler: student.list
     events:
       - http:
-          path: hello
+          path: /v1/student
           method: get
-          cors: true
+  student_delete:
+    handler: student.delete
+    events:
+      - http:
+          path: /v1/student/{name}
+          method: delete
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -118,3 +145,16 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    studentsTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:service}-students-${opt:stage}
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
