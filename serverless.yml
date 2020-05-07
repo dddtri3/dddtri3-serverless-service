@@ -158,3 +158,23 @@ resources:
           - AttributeName: name
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
+    studentsWorkStream: 
+      Type: AWS::Kinesis::Stream
+      Properties: 
+        Name: ${self:service}-studentsWorkStream-${opt:stage}
+        ShardCount: 2
+
+    studentResultsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-studentResultsTable-${opt:stage}
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 2
