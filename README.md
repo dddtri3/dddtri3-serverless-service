@@ -6,7 +6,7 @@
 
 <h1>Pre-Condition</h1>
 npm install -g serverless</br>
-npm install --save-dev serverless-pseudo-parameters</br>
+npm install</br>
 
 
 <h1>To Checkout & Deploy</h1>
@@ -28,3 +28,10 @@ serverless remove --stage dev
 
 
 <h2>DELETE: /v1/students/{name}</h2>
+
+
+
+
+
+<h1>Add & Scan records in Kinesis data stream</h1>
+node putStudentWorkStream.js
