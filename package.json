@@ -1,0 +1,25 @@
+{
+  "name": "dddtri3-serverless-service",
+  "version": "1.0.0",
+  "description": "<h1>Pre-Condition</h1>\r npm install -g serverless</br>\r npm install --save-dev serverless-pseudo-parameters</br>",
+  "main": "no",
+  "dependencies": {
+    "awk": "^1.0.0",
+    "aws-sdk": "^2.670.0",
+    "serverless-pseudo-parameters": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dddtri3/dddtri3-serverless-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dddtri3/dddtri3-serverless-service/issues"
+  },
+  "homepage": "https://github.com/dddtri3/dddtri3-serverless-service#readme"
+}
